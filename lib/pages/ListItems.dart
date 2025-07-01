@@ -28,7 +28,9 @@ class _ListItemsState extends State<ListItems> {
         backgroundColor: Colors.tealAccent[100],
       ),
           body: Column(
+
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -52,7 +54,12 @@ class _ListItemsState extends State<ListItems> {
                 ),
             ],
           ),
-    );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: Icon(Icons.add_box_rounded),
+      ),);
   }
 }
 
