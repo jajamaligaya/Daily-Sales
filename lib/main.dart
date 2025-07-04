@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-      routes: {
-        '/':(context) => ListItems(),
-        '/add':(context) =>Addexpense()
-      },
+    routes: {
+      '/': (context) => Dashboard(),
+      '/add': (context) => Addexpense(),
+      '/list': (context) => ListItems(), // Register List Page Route
+    },
   ));
 }
