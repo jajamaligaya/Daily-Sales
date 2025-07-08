@@ -1,45 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:daily_sales_project/worldtime/services/world_time.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
 
   @override
-  State<Loading> createState() => _LoadingState();
+  _LoadingState createState() => _LoadingState();
 }
 
 class _LoadingState extends State<Loading> {
 
 
-  void getTime() async {
-    //make the req
-    Response response = await get (Uri.parse('https://timeapi.io/api/time/current/zone?timeZone=Europe%2FLondon'));
-    Map data = jsonDecode(response.body);
-    //print (data);
+  void setupWorldTime() async {
+    WorldTime instance = WorldTime(
+      location: 'Batangas',
+      flag: '🇵🇭',
+      url: 'Asia/Manila',
+    );
 
-    //get properties from data
+    await instance.getTime();
 
-    String datatime = data['datetime'];
-    String offset = data ['offset'];
-    print (datetime);
-    print(offset);
-
-
-
-
+    Navigator.pushReplacementNamed(
+      context, '/home',
+      arguments: {
+        'location': instance.location,
+        'flag': instance.flag,
+        'time': instance.time,
+      },
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    getTime();
+    setupWorldTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('loading'),
+      backgroundColor: Colors.brown,
+      body: Center(
+        child: SpinKitRotatingCircle(
+          color: Colors.white,
+          size: 50.0,
+        ),
+      ),
     );
   }
 }
